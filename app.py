@@ -208,9 +208,14 @@ st.markdown("""
     border-radius: 10px !important;
     font-weight: 600 !important;
     transition: all 0.2s !important;
-    background-color: #1e5fa8 !important;
+    background-color: #4169E1 !important;
     color: white !important;
     border: none !important;
+  }
+
+  .stButton > button:hover {
+    background-color: #3657c8 !important;
+    transform: translateY(-1px);
   }
 
   /* INPUT FIELDS WHITE */
