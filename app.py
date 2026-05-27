@@ -49,7 +49,7 @@ st.markdown("""
 
   /* FULL PAGE BACKGROUND */
   .stApp {
-    background-color: #eaf4ff !important;
+    background-color: #f5f6f8 !important;
   }
   /* FORCE GLOBAL TEXT COLOR */
   body, p, span, div, label, h1, h2, h3, h4, h5, h6,
