@@ -204,6 +204,7 @@ st.markdown("""
   .slice-grid img { border-radius: 6px; }
 
   /* ── Button overrides ── */
+</style>
   .stButton > button {
     border-radius: 10px !important;
     font-weight: 600 !important;
@@ -212,28 +213,23 @@ st.markdown("""
     color: white !important;
     border: none !important;
   }
+
+  /* INPUT FIELDS WHITE */
+  input, textarea, [data-baseweb="input"] input, [data-baseweb="select"] {
+      background-color: white !important;
+      color: black !important;
+  }
+
+  div[data-testid="stTextInput"] input,
+  div[data-testid="stNumberInput"] input,
+  div[data-testid="stDateInput"] input,
+  div[data-testid="stSelectbox"] div,
+  textarea {
+      background-color: white !important;
+      color: black !important;
+      border: 1px solid #e2e8f0 !important;
+  }
 </style>
-  .block-container {
-    padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
-  }
-
-  .metric-block {
-    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
-  }
-  .block-container {
-    padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
-  }
-
-  .metric-block {
-    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
-  }
-
-  div[data-testid="stForm"] {
-    border: none !important;
-  }
-  </style>
 """, unsafe_allow_html=True)
 
 
