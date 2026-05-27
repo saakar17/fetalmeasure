@@ -49,7 +49,12 @@ st.markdown("""
 
   /* FULL PAGE BACKGROUND */
   .stApp {
-    background-color: white !important;
+    background-color: #eaf4ff !important;
+  }
+  /* FORCE GLOBAL TEXT COLOR */
+  body, p, span, div, label, h1, h2, h3, h4, h5, h6,
+  .stMarkdown, .stText, .stApp {
+    color: #000000 !important;
   }
 
   /* Brand colours */
@@ -97,13 +102,14 @@ st.markdown("""
     font-size: 26px;
     font-weight: 700;
     margin: 0;
-    color: white;
+    color: #000000;
   }
+
   .um-header p {
     font-size: 13px;
     margin: 2px 0 0;
-    opacity: 0.80;
-    color: white;
+    color: #000000;
+    opacity: 0.8;
   }
 
   /* ── Step indicator ── */
