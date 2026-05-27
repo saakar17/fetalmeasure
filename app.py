@@ -44,6 +44,12 @@ st.markdown("""
 
   html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
+    font-size: 16px;
+  }
+
+  /* FULL PAGE BACKGROUND */
+  .stApp {
+    background-color: white !important;
   }
 
   /* Brand colours */
@@ -61,13 +67,28 @@ st.markdown("""
     --text-soft : #475569;
   }
 
+  h1 {
+    font-size: 34px !important;
+    font-weight: 700 !important;
+  }
+
+  h2 {
+    font-size: 26px !important;
+    font-weight: 600 !important;
+  }
+
+  h3 {
+    font-size: 22px !important;
+  }
+
   /* ── Header bar ── */
   .um-header {
-    background: linear-gradient(135deg, #1a3a5c 0%, #1e5fa8 100%);
-    color: white;
-    padding: 20px 32px;
-    border-radius: 12px;
-    margin-bottom: 28px;
+    background: white;
+    color: #1a3a5c;
+    padding: 10px 0px;
+    border-radius: 0;
+    border-bottom: 2px solid #e2e8f0;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     gap: 16px;
@@ -119,11 +140,10 @@ st.markdown("""
 
   /* ── Cards ── */
   .um-card {
-    background: white;
-    border: 1px solid var(--gray-border);
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 20px;
+    background: transparent;
+    border: none;
+    padding: 8px 0px;
+    margin-bottom: 12px;
   }
   .um-card-title {
     font-size: 15px; font-weight: 700;
@@ -179,12 +199,35 @@ st.markdown("""
 
   /* ── Button overrides ── */
   .stButton > button {
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     font-weight: 600 !important;
     transition: all 0.2s !important;
+    background-color: #1e5fa8 !important;
+    color: white !important;
+    border: none !important;
   }
-  div[data-testid="stForm"] { border: none !important; }
 </style>
+  .block-container {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .metric-block {
+    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  }
+  .block-container {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .metric-block {
+    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  }
+
+  div[data-testid="stForm"] {
+    border: none !important;
+  }
+  </style>
 """, unsafe_allow_html=True)
 
 
