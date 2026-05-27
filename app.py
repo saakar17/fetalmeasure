@@ -204,7 +204,6 @@ st.markdown("""
   .slice-grid img { border-radius: 6px; }
 
   /* ── Button overrides ── */
-</style>
   .stButton > button {
     border-radius: 10px !important;
     font-weight: 600 !important;
