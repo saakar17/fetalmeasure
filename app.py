@@ -30,7 +30,7 @@ from growth_standards import interpret_ac, get_chart_data, lmp_to_ga_weeks
 
 # ── Page config ────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title  = "UltraMeasure — Fetal Growth Assessment, designed by 8th Sem, NIET",
+    page_title  = "UltraMeasure — Fetal Growth Assesst, designed by 8th Sem, NIET",
     page_icon   = "🔬",
     layout      = "wide",
     initial_sidebar_state = "collapsed",
