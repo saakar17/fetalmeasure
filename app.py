@@ -144,18 +144,21 @@ st.markdown("""
   }
   .step-connector.done { background: #059669; }
 
-  /* ── Cards ── */
+  /* ── Cards (SOFT SAAS STYLE) ── */
   .um-card {
-    background: transparent;
-    border: none;
-    padding: 8px 0px;
-    margin-bottom: 12px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
   }
   .um-card-title {
     font-size: 15px; font-weight: 700;
     color: var(--blue-dark);
     margin-bottom: 14px;
     display: flex; align-items: center; gap: 8px;
+    margin-bottom: 10px;
   }
 
   /* ── Result badge ── */
@@ -172,8 +175,8 @@ st.markdown("""
 
   /* ── Metric block ── */
   .metric-block {
-    background: var(--blue-light);
-    border-left: 4px solid var(--blue-mid);
+    background: #f8fafc;
+    border-left: 4px solid #4169E1;
     border-radius: 0 8px 8px 0;
     padding: 14px 20px;
     margin-bottom: 12px;
@@ -208,14 +211,32 @@ st.markdown("""
     border-radius: 10px !important;
     font-weight: 600 !important;
     transition: all 0.2s !important;
-    background-color: #4169E1 !important;
+    background-color: #3b82f6 !important;
     color: white !important;
     border: none !important;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.25) !important;
   }
 
   .stButton > button:hover {
-    background-color: #3657c8 !important;
+    background-color: #2563eb !important;
     transform: translateY(-1px);
+  }
+
+  /* FORCE ALL STREAMLIT BUTTON VARIANTS BLUE */
+  button[kind="primary"],
+  button[kind="secondary"],
+  button[data-testid="baseButton-primary"],
+  button[data-testid="baseButton-secondary"] {
+      background-color: #3b82f6 !important;
+      color: white !important;
+      border: none !important;
+  }
+
+  button[kind="primary"]:hover,
+  button[kind="secondary"]:hover,
+  button[data-testid="baseButton-primary"]:hover,
+  button[data-testid="baseButton-secondary"]:hover {
+      background-color: #2563eb !important;
   }
 
   /* INPUT FIELDS WHITE */
