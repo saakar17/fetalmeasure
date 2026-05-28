@@ -211,24 +211,25 @@ st.markdown("""
     border-radius: 10px !important;
     font-weight: 600 !important;
     transition: all 0.2s !important;
-    background-color: #3b82f6 !important;
-    color: white !important;
+    background-color: #ef4444 !important;
+    color: black !important;
     border: none !important;
-    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.25) !important;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.20) !important;
   }
 
   .stButton > button:hover {
-    background-color: #2563eb !important;
+    background-color: #dc2626 !important;
+    color: black !important;
     transform: translateY(-1px);
   }
 
-  /* FORCE ALL STREAMLIT BUTTON VARIANTS BLUE */
+  /* FORCE ALL STREAMLIT BUTTON VARIANTS RED */
   button[kind="primary"],
   button[kind="secondary"],
   button[data-testid="baseButton-primary"],
   button[data-testid="baseButton-secondary"] {
-      background-color: #3b82f6 !important;
-      color: white !important;
+      background-color: #ef4444 !important;
+      color: black !important;
       border: none !important;
   }
 
@@ -236,7 +237,8 @@ st.markdown("""
   button[kind="secondary"]:hover,
   button[data-testid="baseButton-primary"]:hover,
   button[data-testid="baseButton-secondary"]:hover {
-      background-color: #2563eb !important;
+      background-color: #dc2626 !important;
+      color: black !important;
   }
 
   /* INPUT FIELDS WHITE */
