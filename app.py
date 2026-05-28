@@ -30,7 +30,7 @@ from growth_standards import interpret_ac, get_chart_data, lmp_to_ga_weeks
 
 # ── Page config ────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title  = "UltraMeasure — Fetal Growth Assesst, designed by 8th Sem, NIET",
+    page_title  = "UltraMeasure — Fetal Growth Assessment",
     page_icon   = "🔬",
     layout      = "wide",
     initial_sidebar_state = "collapsed",
@@ -39,190 +39,412 @@ st.set_page_config(
 # ── Global CSS ─────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-  /* ── Typography & palette ── */
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
   html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
     font-size: 16px;
   }
 
-  /* FULL PAGE BACKGROUND */
-  .stApp {
-    background: linear-gradient(135deg, #f7fbff 0%, #eef6ff 50%, #f9fbff 100%) !important;
-  }
-  /* FORCE GLOBAL TEXT COLOR */
-  body, p, span, div, label, h1, h2, h3, h4, h5, h6,
-  .stMarkdown, .stText, .stApp {
-    color: #000000 !important;
-  }
-
-  /* Brand colours */
+  /* ── Palette: deep navy + electric blue ── */
   :root {
-    --blue-dark : #1a3a5c;
-    --blue-mid  : #1e5fa8;
-    --blue-light: #e8f1fb;
-    --teal      : #0d9488;
-    --green     : #059669;
-    --amber     : #d97706;
-    --red       : #dc2626;
-    --gray-soft : #f1f5f9;
-    --gray-border:#e2e8f0;
-    --text-main : #0f172a;
-    --text-soft : #475569;
+    --navy       : #050d1f;
+    --navy-2     : #0a1628;
+    --navy-3     : #0f2040;
+    --navy-4     : #162a52;
+    --electric   : #2d7cf6;
+    --electric-2 : #5b9cf8;
+    --electric-3 : #a8ccfc;
+    --electric-4 : #dbeafe;
+    --green      : #00c48c;
+    --amber      : #f59e0b;
+    --red        : #f43f5e;
+    --border     : rgba(45,124,246,0.18);
+    --border-soft: rgba(255,255,255,0.07);
+    --text       : #f0f4ff;
+    --text-soft  : #8fa4c8;
+    --text-muted : #4a5d80;
   }
 
-  h1 {
-    font-size: 34px !important;
-    font-weight: 700 !important;
+  /* ── Force dark background on entire app ── */
+  .stApp, .main, section[data-testid="stSidebar"],
+  div[data-testid="stAppViewContainer"],
+  div[data-testid="stVerticalBlock"] {
+    background-color: var(--navy) !important;
   }
 
-  h2 {
-    font-size: 26px !important;
+  /* ── Remove Streamlit's default white blocks ── */
+  div[data-testid="stForm"],
+  div[data-testid="column"],
+  div[data-testid="stVerticalBlock"] > div {
+    background: transparent !important;
+  }
+
+  /* ── Global text color ── */
+  p, span, label, div, li, td, th,
+  .stMarkdown, .stText {
+    color: var(--text) !important;
+  }
+
+  /* ── Input fields ── */
+  input[type="text"], input[type="number"],
+  textarea, select,
+  div[data-baseweb="input"] input,
+  div[data-baseweb="textarea"] textarea {
+    background: var(--navy-3) !important;
+    border: 1.5px solid var(--border) !important;
+    border-radius: 10px !important;
+    color: var(--text) !important;
+    font-size: 15px !important;
+    padding: 12px 16px !important;
+  }
+
+  input[type="text"]:focus, input[type="number"]:focus {
+    border-color: var(--electric) !important;
+    box-shadow: 0 0 0 3px rgba(45,124,246,0.2) !important;
+  }
+
+  /* ── Labels ── */
+  label[data-testid="stWidgetLabel"] p,
+  .stTextInput label, .stNumberInput label,
+  .stDateInput label, .stSelectbox label {
+    font-size: 13px !important;
     font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    color: var(--text-soft) !important;
+    text-transform: uppercase !important;
   }
 
-  h3 {
-    font-size: 22px !important;
+  /* ── Buttons ── */
+  .stButton > button {
+    background: var(--navy-3) !important;
+    border: 1.5px solid var(--border) !important;
+    border-radius: 10px !important;
+    color: var(--text) !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    padding: 14px 28px !important;
+    transition: all 0.2s ease !important;
+    letter-spacing: 0.3px !important;
   }
+
+  .stButton > button:hover {
+    background: var(--navy-4) !important;
+    border-color: var(--electric) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* Primary button */
+  .stButton > button[kind="primary"] {
+    background: var(--electric) !important;
+    border-color: var(--electric) !important;
+    color: white !important;
+  }
+
+  .stButton > button[kind="primary"]:hover {
+    background: #1a6ae8 !important;
+    box-shadow: 0 4px 24px rgba(45,124,246,0.4) !important;
+  }
+
+  /* ── File uploader ── */
+  div[data-testid="stFileUploader"] {
+    background: var(--navy-3) !important;
+    border: 2px dashed var(--border) !important;
+    border-radius: 16px !important;
+    padding: 32px !important;
+  }
+
+  div[data-testid="stFileUploader"]:hover {
+    border-color: var(--electric) !important;
+    background: var(--navy-4) !important;
+  }
+
+  /* ── Progress bar ── */
+  div[data-testid="stProgressBar"] > div {
+    background: var(--navy-3) !important;
+    border-radius: 8px !important;
+  }
+  div[data-testid="stProgressBar"] > div > div {
+    background: linear-gradient(90deg, var(--electric), var(--electric-2)) !important;
+    border-radius: 8px !important;
+  }
+
+  /* ── Info / success / warning boxes ── */
+  div[data-testid="stAlert"] {
+    border-radius: 12px !important;
+    border: 1px solid var(--border) !important;
+    background: var(--navy-3) !important;
+  }
+
+  /* ── Selectbox ── */
+  div[data-baseweb="select"] > div {
+    background: var(--navy-3) !important;
+    border: 1.5px solid var(--border) !important;
+    border-radius: 10px !important;
+    color: var(--text) !important;
+  }
+
+  /* ── Date input ── */
+  div[data-baseweb="input"] {
+    background: var(--navy-3) !important;
+    border-radius: 10px !important;
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--navy-4); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--electric); }
 
   /* ── Header bar ── */
   .um-header {
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(226, 232, 240, 0.6);
-      border-radius: 18px;
-      padding: 20px 24px;
-      margin-bottom: 28px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      box-shadow: 0 10px 30px rgba(30, 64, 175, 0.08);
+    background: linear-gradient(135deg, var(--navy-2) 0%, var(--navy-4) 100%);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 40px;
+    margin-bottom: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .um-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(45,124,246,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .um-header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(0,196,140,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .um-header h1 {
+    font-size: 34px !important;
+    font-weight: 800 !important;
+    margin: 0 0 6px !important;
+    color: white !important;
+    letter-spacing: -0.5px;
+  }
+  .um-header p {
+    font-size: 15px !important;
+    margin: 0 !important;
+    color: var(--electric-3) !important;
+    font-weight: 400;
+  }
+  .um-header .tag {
+    display: inline-block;
+    background: rgba(45,124,246,0.2);
+    border: 1px solid rgba(45,124,246,0.4);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--electric-2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
   }
 
   /* ── Step indicator ── */
   .step-bar {
     display: flex;
     align-items: center;
-    margin-bottom: 32px;
+    margin-bottom: 40px;
+    background: var(--navy-2);
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 16px 24px;
     gap: 0;
   }
   .step-item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     flex: 1;
   }
   .step-circle {
-    width: 32px; height: 32px;
+    width: 36px; height: 36px;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 700;
+    font-size: 14px; font-weight: 700;
     flex-shrink: 0;
+    transition: all 0.3s ease;
   }
-  .step-circle.done   { background: #059669; color: white; }
-  .step-circle.active { background: #1e5fa8; color: white;
-                        box-shadow: 0 0 0 3px #bfdbfe; }
-  .step-circle.todo   { background: #e2e8f0; color: #94a3b8; }
-  .step-label { font-size: 12px; font-weight: 600; color: #475569; }
-  .step-label.active  { color: #1e5fa8; }
+  .step-circle.done {
+    background: var(--green);
+    color: #001a0f;
+    font-size: 16px;
+  }
+  .step-circle.active {
+    background: var(--electric);
+    color: white;
+    box-shadow: 0 0 0 4px rgba(45,124,246,0.25), 0 0 20px rgba(45,124,246,0.3);
+  }
+  .step-circle.todo {
+    background: var(--navy-4);
+    color: var(--text-muted);
+    border: 1.5px solid var(--border-soft);
+  }
+  .step-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.2px;
+  }
+  .step-label.active { color: var(--electric-2); }
+  .step-label.done   { color: var(--green); }
   .step-connector {
     flex: 1; height: 2px;
-    background: #e2e8f0; margin: 0 4px;
+    background: var(--border-soft);
+    margin: 0 6px;
+    border-radius: 2px;
   }
-  .step-connector.done { background: #059669; }
+  .step-connector.done { background: var(--green); }
 
-  /* ── Cards (SOFT SAAS STYLE) ── */
+  /* ── Cards ── */
   .um-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(226, 232, 240, 0.7);
-      border-radius: 18px;
-      padding: 22px;
-      margin-bottom: 18px;
-      box-shadow: 0 12px 32px rgba(30, 64, 175, 0.06);
+    background: var(--navy-2);
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
   }
   .um-card-title {
-      font-size: 17px;
-      font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text) !important;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.2px;
   }
 
   /* ── Result badge ── */
   .badge {
     display: inline-block;
-    padding: 4px 14px;
-    border-radius: 20px;
-    font-size: 13px; font-weight: 600;
+    padding: 6px 18px;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
   }
-  .badge-green  { background: #d1fae5; color: #065f46; }
-  .badge-amber  { background: #fef3c7; color: #92400e; }
-  .badge-red    { background: #fee2e2; color: #991b1b; }
-  .badge-gray   { background: #f1f5f9; color: #475569; }
+  .badge-green { background: rgba(0,196,140,0.15); color: #00c48c;
+                 border: 1px solid rgba(0,196,140,0.3); }
+  .badge-amber { background: rgba(245,158,11,0.15); color: #f59e0b;
+                 border: 1px solid rgba(245,158,11,0.3); }
+  .badge-red   { background: rgba(244,63,94,0.15);  color: #f43f5e;
+                 border: 1px solid rgba(244,63,94,0.3); }
+  .badge-gray  { background: var(--navy-3); color: var(--text-soft);
+                 border: 1px solid var(--border); }
 
   /* ── Metric block ── */
   .metric-block {
-      background: linear-gradient(135deg, #ffffff, #f1f7ff);
-      border: 1px solid #dbeafe;
-      border-radius: 16px;
-      padding: 18px 22px;
-      margin-bottom: 14px;
-      box-shadow: 0 6px 18px rgba(30, 64, 175, 0.05);
+    background: var(--navy-3);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--electric);
+    border-radius: 0 12px 12px 0;
+    padding: 18px 24px;
+    margin-bottom: 14px;
+    transition: border-color 0.2s;
+  }
+  .metric-block:hover { border-left-color: var(--electric-2); }
+  .metric-block .label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--electric-2);
+    margin-bottom: 4px;
+  }
+  .metric-block .value {
+    font-size: 36px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -1px;
+    line-height: 1.1;
+  }
+  .metric-block .unit {
+    font-size: 16px;
+    color: var(--text-soft);
+    margin-left: 6px;
+    font-weight: 400;
   }
 
   /* ── Disclaimer ── */
   .disclaimer {
-    background: #fefce8;
-    border: 1px solid #fde68a;
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 12px; color: #78350f;
-    margin-top: 16px;
+    background: rgba(245,158,11,0.08);
+    border: 1px solid rgba(245,158,11,0.25);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: #fbbf24;
+    margin-top: 20px;
+    line-height: 1.6;
   }
 
-  /* ── Stacked image grid ── */
-  .slice-grid img { border-radius: 6px; }
+  /* ── Patient summary bar ── */
+  .patient-bar {
+    background: var(--navy-3);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 28px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .patient-bar .field-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .patient-bar .field-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* ── Reference values ── */
+  .ref-values {
+    background: var(--navy-3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.7;
+  }
+
+  /* ── Slice score label ── */
+  .slice-score-pos { font-size: 12px; text-align: center;
+                     color: #00c48c; margin: 0; }
+  .slice-score-neg { font-size: 12px; text-align: center;
+                     color: var(--text-muted); margin: 0; }
+
+  /* ── Interpretation box ── */
+  .interp-box {
+    background: var(--navy-3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-top: 14px;
+    font-size: 15px;
+    color: var(--text-soft);
+    line-height: 1.8;
+  }
 
   /* ── Button overrides ── */
-  .stButton > button {
-      border-radius: 12px !important;
-      font-weight: 600 !important;
-      transition: all 0.22s ease !important;
-      background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
-      color: white !important;
-      border: none !important;
-      min-height: 46px !important;
-      box-shadow: 0 8px 20px rgba(59,130,246,0.20) !important;
-  }
+  div[data-testid="stForm"] { border: none !important; }
 
-  .stButton > button:hover {
-      transform: translateY(-2px);
-      background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
-      box-shadow: 0 12px 26px rgba(37,99,235,0.25) !important;
-      color: white !important;
-  }
-
-  /* INPUT FIELDS WHITE */
-  input, textarea, [data-baseweb="input"] input, [data-baseweb="select"] {
-      background-color: white !important;
-      color: black !important;
-  }
-
-  div[data-testid="stTextInput"] input,
-  div[data-testid="stNumberInput"] input,
-  div[data-testid="stDateInput"] input,
-  div[data-testid="stSelectbox"] div,
-  textarea {
-      background-color: white !important;
-      color: black !important;
-      border: 1px solid #e2e8f0 !important;
-  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -272,7 +494,7 @@ def render_steps(current: int):
     html   = '<div class="step-bar">'
     for i, label in enumerate(steps, 1):
         if i < current:
-            circle_cls = "done";   label_cls = ""
+            circle_cls = "done";   label_cls = "done"
             icon = "✓"
         elif i == current:
             circle_cls = "active"; label_cls = "active"
@@ -366,10 +588,9 @@ def load_images_from_upload(uploaded_files) -> tuple:
 
 st.markdown("""
 <div class="um-header">
-  <div>
-    <h1>🔬 UltraMeasure</h1>
-    <p>Automated Fetal Abdominal Circumference Assessment · Hadlock (1984) Standards</p>
-  </div>
+  <div class="tag">Fetal Growth Assessment · AI-Powered</div>
+  <h1>🔬 UltraMeasure</h1>
+  <p>Automated abdominal circumference measurement from ultrasound · Hadlock (1984) standards</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -770,24 +991,17 @@ elif st.session_state.step == 5:
 
     # ── Patient summary bar ────────────────────────────────────────────
     st.markdown(f"""
-    <div style="background:#f8fafc;border:1px solid #e2e8f0;
-                border-radius:10px;padding:16px;margin-bottom:20px;
-                display:flex;gap:32px;flex-wrap:wrap">
-      <div><span style="font-size:11px;color:#64748b;text-transform:uppercase;
-           letter-spacing:1px">Patient</span><br>
-           <strong>{p['name']}</strong></div>
-      <div><span style="font-size:11px;color:#64748b;text-transform:uppercase;
-           letter-spacing:1px">ID</span><br>
-           <strong>{p['id']}</strong></div>
-      <div><span style="font-size:11px;color:#64748b;text-transform:uppercase;
-           letter-spacing:1px">Scan Date</span><br>
-           <strong>{p['scan_date']}</strong></div>
-      <div><span style="font-size:11px;color:#64748b;text-transform:uppercase;
-           letter-spacing:1px">LMP</span><br>
-           <strong>{p['lmp']}</strong></div>
-      <div><span style="font-size:11px;color:#64748b;text-transform:uppercase;
-           letter-spacing:1px">Gestational Age</span><br>
-           <strong>{f"{ga:.1f} weeks" if ga else "Not provided"}</strong></div>
+    <div class="patient-bar">
+      <div><div class="field-label">Patient</div>
+           <div class="field-value">{p['name']}</div></div>
+      <div><div class="field-label">ID</div>
+           <div class="field-value">{p['id']}</div></div>
+      <div><div class="field-label">Scan Date</div>
+           <div class="field-value">{p['scan_date']}</div></div>
+      <div><div class="field-label">LMP</div>
+           <div class="field-value">{p['lmp']}</div></div>
+      <div><div class="field-label">Gestational Age</div>
+           <div class="field-value">{f"{ga:.1f} weeks" if ga else "Not provided"}</div></div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -820,22 +1034,20 @@ elif st.session_state.step == 5:
                 unsafe_allow_html=True
             )
             st.markdown(f"""
-            <div style="background:#f8fafc;border-radius:8px;
-                        padding:14px;margin-top:12px;font-size:13px;
-                        color:#334155;line-height:1.7">
-              {interp['message']}
-            </div>
+            <div class="interp-box">{interp['message']}</div>
             """, unsafe_allow_html=True)
 
             # Reference values
             ref = interp['ref']
             if ref['in_table']:
                 st.markdown(f"""
-                <div style="margin-top:12px;font-size:12px;color:#475569">
-                  <strong>Hadlock (1984) Reference at {ga:.1f}w:</strong><br>
-                  5th percentile: {ref['p5']} mm &nbsp;·&nbsp;
-                  50th percentile: {ref['p50']} mm &nbsp;·&nbsp;
-                  95th percentile: {ref['p95']} mm
+                <div class="ref-values">
+                  <strong style="color:#8fa4c8">Hadlock (1984) at {ga:.1f}w</strong><br>
+                  5th percentile: <strong style="color:#f0f4ff">{ref['p5']} mm</strong>
+                  &nbsp;·&nbsp;
+                  50th percentile: <strong style="color:#f0f4ff">{ref['p50']} mm</strong>
+                  &nbsp;·&nbsp;
+                  95th percentile: <strong style="color:#f0f4ff">{ref['p95']} mm</strong>
                 </div>
                 """, unsafe_allow_html=True)
         elif ac_mm and not ga:
@@ -864,18 +1076,18 @@ elif st.session_state.step == 5:
             # Percentile bands
             fig.add_trace(go.Scatter(
                 x=chart_data['weeks'], y=chart_data['p95'],
-                name='95th', line=dict(color='#93c5fd', dash='dash', width=1),
+                name='95th', line=dict(color='#2d7cf6', dash='dash', width=1),
                 showlegend=True,
             ))
             fig.add_trace(go.Scatter(
                 x=chart_data['weeks'], y=chart_data['p50'],
-                name='50th (median)', line=dict(color='#1e5fa8', width=2),
+                name='50th (median)', line=dict(color='#5b9cf8', width=2.5),
                 showlegend=True,
             ))
             fig.add_trace(go.Scatter(
                 x=chart_data['weeks'], y=chart_data['p5'],
-                name='5th', line=dict(color='#93c5fd', dash='dash', width=1),
-                fill='tonexty', fillcolor='rgba(147,197,253,0.15)',
+                name='5th', line=dict(color='#2d7cf6', dash='dash', width=1),
+                fill='tonexty', fillcolor='rgba(45,124,246,0.08)',
                 showlegend=True,
             ))
 
@@ -897,26 +1109,31 @@ elif st.session_state.step == 5:
             fig.update_layout(
                 title=dict(
                     text='Fetal AC Growth Chart — Hadlock (1984)',
-                    font=dict(size=13, color='#1a3a5c')
+                    font=dict(size=14, color='#8fa4c8')
                 ),
                 xaxis=dict(
                     title='Gestational Age (weeks)',
                     range=[14, 42], dtick=2,
-                    gridcolor='#f1f5f9',
+                    gridcolor='rgba(45,124,246,0.08)',
+                    color='#8fa4c8',
+                    title_font=dict(color='#8fa4c8'),
                 ),
                 yaxis=dict(
                     title='AC (mm)',
-                    gridcolor='#f1f5f9',
+                    gridcolor='rgba(45,124,246,0.08)',
+                    color='#8fa4c8',
+                    title_font=dict(color='#8fa4c8'),
                 ),
                 legend=dict(
                     orientation='h', yanchor='bottom',
                     y=1.02, xanchor='right', x=1,
-                    font=dict(size=11),
+                    font=dict(size=12, color='#8fa4c8'),
+                    bgcolor='rgba(0,0,0,0)',
                 ),
-                plot_bgcolor='white',
-                paper_bgcolor='white',
-                margin=dict(l=40, r=20, t=60, b=40),
-                height=380,
+                plot_bgcolor='#0a1628',
+                paper_bgcolor='#0a1628',
+                margin=dict(l=48, r=20, t=60, b=48),
+                height=400,
             )
             st.plotly_chart(fig, use_container_width=True)
 
