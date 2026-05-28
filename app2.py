@@ -49,7 +49,7 @@ st.markdown("""
 
   /* FULL PAGE BACKGROUND */
   .stApp {
-    background: linear-gradient(135deg, #f7fbff 0%, #eef6ff 50%, #f9fbff 100%) !important;
+    background-color: #eaf4ff !important;
   }
   /* FORCE GLOBAL TEXT COLOR */
   body, p, span, div, label, h1, h2, h3, h4, h5, h6,
@@ -88,17 +88,28 @@ st.markdown("""
 
   /* ── Header bar ── */
   .um-header {
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(226, 232, 240, 0.6);
-      border-radius: 18px;
-      padding: 20px 24px;
-      margin-bottom: 28px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      box-shadow: 0 10px 30px rgba(30, 64, 175, 0.08);
+    background: white;
+    color: #1a3a5c;
+    padding: 10px 0px;
+    border-radius: 0;
+    border-bottom: 2px solid #e2e8f0;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .um-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0;
+    color: #000000;
+  }
+
+  .um-header p {
+    font-size: 13px;
+    margin: 2px 0 0;
+    color: #000000;
+    opacity: 0.8;
   }
 
   /* ── Step indicator ── */
@@ -135,23 +146,19 @@ st.markdown("""
 
   /* ── Cards (SOFT SAAS STYLE) ── */
   .um-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(226, 232, 240, 0.7);
-      border-radius: 18px;
-      padding: 22px;
-      margin-bottom: 18px;
-      box-shadow: 0 12px 32px rgba(30, 64, 175, 0.06);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
   }
   .um-card-title {
-      font-size: 17px;
-      font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    font-size: 15px; font-weight: 700;
+    color: var(--blue-dark);
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 10px;
   }
 
   /* ── Result badge ── */
@@ -168,12 +175,22 @@ st.markdown("""
 
   /* ── Metric block ── */
   .metric-block {
-      background: linear-gradient(135deg, #ffffff, #f1f7ff);
-      border: 1px solid #dbeafe;
-      border-radius: 16px;
-      padding: 18px 22px;
-      margin-bottom: 14px;
-      box-shadow: 0 6px 18px rgba(30, 64, 175, 0.05);
+    background: #f8fafc;
+    border-left: 4px solid #4169E1;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 20px;
+    margin-bottom: 12px;
+  }
+  .metric-block .label {
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--blue-mid); margin-bottom: 2px;
+  }
+  .metric-block .value {
+    font-size: 28px; font-weight: 700; color: var(--blue-dark);
+  }
+  .metric-block .unit {
+    font-size: 14px; color: var(--text-soft); margin-left: 4px;
   }
 
   /* ── Disclaimer ── */
@@ -191,21 +208,37 @@ st.markdown("""
 
   /* ── Button overrides ── */
   .stButton > button {
-      border-radius: 12px !important;
-      font-weight: 600 !important;
-      transition: all 0.22s ease !important;
-      background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
-      color: white !important;
-      border: none !important;
-      min-height: 46px !important;
-      box-shadow: 0 8px 20px rgba(59,130,246,0.20) !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    transition: all 0.2s !important;
+    background-color: #ef4444 !important;
+    color: black !important;
+    border: none !important;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.20) !important;
   }
 
   .stButton > button:hover {
-      transform: translateY(-2px);
-      background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
-      box-shadow: 0 12px 26px rgba(37,99,235,0.25) !important;
-      color: white !important;
+    background-color: #dc2626 !important;
+    color: black !important;
+    transform: translateY(-1px);
+  }
+
+  /* FORCE ALL STREAMLIT BUTTON VARIANTS RED */
+  button[kind="primary"],
+  button[kind="secondary"],
+  button[data-testid="baseButton-primary"],
+  button[data-testid="baseButton-secondary"] {
+      background-color: #ef4444 !important;
+      color: black !important;
+      border: none !important;
+  }
+
+  button[kind="primary"]:hover,
+  button[kind="secondary"]:hover,
+  button[data-testid="baseButton-primary"]:hover,
+  button[data-testid="baseButton-secondary"]:hover {
+      background-color: #dc2626 !important;
+      color: black !important;
   }
 
   /* INPUT FIELDS WHITE */
