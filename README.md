@@ -1,6 +1,7 @@
+
 # UltraMeasure — Fetal Growth Assessment
 Automated fetal abdominal circumference measurement from ultrasound images.
-
+<img width="1383" height="741" alt="Screenshot 2026-08-04 at 20 33 10" src="https://github.com/user-attachments/assets/680a1a81-b1d5-4e3c-b328-c13c9ff7c081" />
 ---
 
 ## Folder structure
